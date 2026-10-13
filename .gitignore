@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Tools
+.ruff_cache/
+.pytest_cache/
+.mypy_cache/
+
+# Models and generated files
+models/
+outputs/
+*.safetensors
+*.ckpt
+*.pt
+*.pth
+*.bin
+gradio_cached_examples/
+flagged/
+
+# Environment and secrets
+.env
+.env.*
+*.pem
+*.key
+
+# OS and editors
+.DS_Store
+.idea/
+.vscode/

@@ -1,7 +1,8 @@
 import gradio as gr
-from PIL import Image
+
 from src.core.engine import ImageTransformerEngine
 from src.core.memory import get_vram_info
+
 
 def create_dashboard(engine: ImageTransformerEngine):
     def run_inference(
@@ -54,7 +55,8 @@ def create_dashboard(engine: ImageTransformerEngine):
         button_primary_text_color="white"
     )
 
-    with gr.Blocks(theme=theme, title="AI Image Transformer Dashboard") as interface:
+    # Gradio 6+: theme is passed to launch() (see app.py) instead of Blocks()
+    with gr.Blocks(title="AI Image Transformer Dashboard") as interface:
         gr.Markdown(
             """
             # 🎨 AI Image Transformer (SDXL + ControlNet Canny)
@@ -67,7 +69,7 @@ def create_dashboard(engine: ImageTransformerEngine):
                 input_image = gr.Image(label="Source Image", type="pil")
                 prompt = gr.Textbox(
                     label="Prompt", 
-                    placeholder="Describe the target image styling (e.g., 'a cinematic cyberpunk street, high detail, 8k')..."
+                    placeholder="Describe the target image (e.g., 'a cinematic cyberpunk street, high detail')..."
                 )
                 neg_prompt = gr.Textbox(
                     label="Negative Prompt", 
@@ -112,4 +114,5 @@ def create_dashboard(engine: ImageTransformerEngine):
             outputs=[output_image, vram_display]
         )
         
+    interface.launch_theme = theme
     return interface

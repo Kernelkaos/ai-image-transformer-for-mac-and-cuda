@@ -1,7 +1,9 @@
 import argparse
 import sys
+
 from src.core.engine import ImageTransformerEngine
 from src.ui.dashboard import create_dashboard
+
 
 def main():
     parser = argparse.ArgumentParser(description="AI Image Transformer Production Launcher")
@@ -22,7 +24,12 @@ def main():
     dashboard = create_dashboard(engine)
     
     print(f"Launching production interface on http://{args.host}:{args.port}")
-    dashboard.launch(server_name=args.host, server_port=args.port, share=args.share)
+    dashboard.launch(
+        server_name=args.host,
+        server_port=args.port,
+        share=args.share,
+        theme=getattr(dashboard, "launch_theme", None),
+    )
 
 if __name__ == "__main__":
     main()

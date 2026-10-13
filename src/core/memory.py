@@ -1,5 +1,6 @@
 import gc
 import logging
+
 import torch
 
 logger = logging.getLogger(__name__)
@@ -10,11 +11,20 @@ def flush_vram():
     if torch.cuda.is_available():
         torch.cuda.empty_cache()
         torch.cuda.ipc_collect()
+    elif torch.backends.mps.is_available():
+        torch.mps.empty_cache()
     logger.debug("VRAM and GC cache cleared.")
 
 def get_vram_info():
     """Retrieves current VRAM usage details in Megabytes."""
     if not torch.cuda.is_available():
+        if torch.backends.mps.is_available():
+            return {
+                "device": "Apple Silicon GPU (MPS)",
+                "allocated_mb": round(torch.mps.current_allocated_memory() / (1024 ** 2), 2),
+                "cached_mb": round(torch.mps.driver_allocated_memory() / (1024 ** 2), 2),
+                "total_mb": 0
+            }
         return {"device": "CPU", "allocated": 0, "cached": 0, "total": 0}
     
     device = torch.cuda.current_device()

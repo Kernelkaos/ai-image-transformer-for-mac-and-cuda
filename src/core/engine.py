@@ -1,20 +1,24 @@
 import os
-import yaml
-import torch
-import numpy as np
+
 import cv2
+import numpy as np
+import torch
+import yaml
+from diffusers import AutoencoderKL, ControlNetModel, StableDiffusionXLControlNetPipeline
 from PIL import Image
-from diffusers import (
-    StableDiffusionXLControlNetPipeline,
-    ControlNetModel,
-    AutoencoderKL
-)
-from src.core.memory import VRAMGuard, flush_vram
+
+from src.core.memory import VRAMGuard
+
 
 class ImageTransformerEngine:
     def __init__(self, config_path="config/settings.yaml"):
         self.config = self._load_config(config_path)
-        self.device = "cuda" if torch.cuda.is_available() else "cpu"
+        if torch.cuda.is_available():
+            self.device = "cuda"
+        elif torch.backends.mps.is_available():
+            self.device = "mps"  # Apple Silicon GPU
+        else:
+            self.device = "cpu"
         self.pipe = None
         self.controlnet = None
 
@@ -32,7 +36,7 @@ class ImageTransformerEngine:
         settings = self.config["model_settings"]
         perf_settings = self.config["performance"]
         
-        dtype = torch.float16 if settings["precision"] == "fp16" and self.device == "cuda" else torch.float32
+        dtype = torch.float16 if settings["precision"] == "fp16" and self.device in ("cuda", "mps") else torch.float32
 
         # 1. Load VAE to prevent black images issues in fp16
         vae = AutoencoderKL.from_pretrained(
@@ -71,6 +75,12 @@ class ImageTransformerEngine:
                 
             if perf_settings.get("enable_cpu_offload"):
                 self.pipe.enable_sequential_cpu_offload()
+        elif self.device == "mps":
+            # Recommended by diffusers for Apple Silicon to reduce memory pressure
+            if perf_settings.get("enable_attention_slicing"):
+                self.pipe.enable_attention_slicing()
+            if perf_settings.get("enable_vae_tiling"):
+                self.pipe.enable_vae_tiling()
 
     def process_canny_image(self, image: Image.Image, low_threshold=100, high_threshold=200):
         """Processes the input image to extract Canny edge lines."""
