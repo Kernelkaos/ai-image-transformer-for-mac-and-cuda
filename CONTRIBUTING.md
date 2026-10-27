@@ -11,8 +11,8 @@ For security problems, do **not** open a public issue. See [SECURITY.md](SECURIT
 ## Development setup
 
 ```bash
-git clone https://github.com/Kernelkaos/ai-image-transformer.git
-cd ai-image-transformer
+git clone https://github.com/Kernelkaos/ai-image-transformer-for-mac-and-cuda.git
+cd ai-image-transformer-for-mac-and-cuda
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt

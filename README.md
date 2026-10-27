@@ -1,6 +1,6 @@
 # AI Image Transformer
 
-[![CI](https://github.com/Kernelkaos/ai-image-transformer/actions/workflows/ci.yml/badge.svg)](https://github.com/Kernelkaos/ai-image-transformer/actions/workflows/ci.yml)
+[![CI](https://github.com/Kernelkaos/ai-image-transformer-for-mac-and-cuda/actions/workflows/ci.yml/badge.svg)](https://github.com/Kernelkaos/ai-image-transformer-for-mac-and-cuda/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 ![Python](https://img.shields.io/badge/python-3.10--3.13-blue.svg)
 ![Platforms](https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows-lightgrey.svg)
@@ -45,8 +45,8 @@ Runs on **NVIDIA GPUs (CUDA)**, **Apple Silicon (MPS)** and, slowly, on **CPU**.
 ## Installation
 
 ```bash
-git clone https://github.com/Kernelkaos/ai-image-transformer.git
-cd ai-image-transformer
+git clone https://github.com/Kernelkaos/ai-image-transformer-for-mac-and-cuda.git
+cd ai-image-transformer-for-mac-and-cuda
 
 python3 -m venv .venv
 source .venv/bin/activate      # Windows: .venv\Scripts\activate

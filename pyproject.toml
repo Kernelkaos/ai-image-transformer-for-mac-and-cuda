@@ -9,8 +9,8 @@ authors = [{ name = "Kernelkaos" }]
 keywords = ["stable-diffusion", "sdxl", "controlnet", "gradio", "image-to-image"]
 
 [project.urls]
-Homepage = "https://github.com/Kernelkaos/ai-image-transformer"
-Issues = "https://github.com/Kernelkaos/ai-image-transformer/issues"
+Homepage = "https://github.com/Kernelkaos/ai-image-transformer-for-mac-and-cuda"
+Issues = "https://github.com/Kernelkaos/ai-image-transformer-for-mac-and-cuda/issues"
 
 [tool.ruff]
 line-length = 120
